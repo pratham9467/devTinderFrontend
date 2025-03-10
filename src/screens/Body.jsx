@@ -13,6 +13,7 @@ const Body = () => {
   const userData = useSelector((state) => state.user);
 
   const fetchData = async () => {
+    if (userData) return;
     try {
       if (!userData) {
         const Userprofile = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
