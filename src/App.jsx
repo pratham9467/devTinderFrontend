@@ -8,6 +8,7 @@ import store from "./utils/Store";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import Feed from "./components/Feed";
+import Connections from "./components/Connections";
 
 const App = () => {
   return (
@@ -16,10 +17,11 @@ const App = () => {
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Body />}>
+              <Route path="/" element={<Feed />} />
               <Route path="/login" element={<Login />} />
-             <Route path="/feed" element={<Feed/>}/>
               <Route path="/signup" element={<SignUp />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/connections" element={<Connections />} />
               <Route path="/error" element={<Error />} />
             </Route>
           </Routes>

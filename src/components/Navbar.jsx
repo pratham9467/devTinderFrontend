@@ -16,27 +16,28 @@ const Navbar = () => {
       dispatch(removeUser());
       return navigateTo("/login");
     } catch (err) {
-       console.log(err?.response?.data || "Something went wrong");
+      console.log(err?.response?.data || "Something went wrong");
     }
   };
 
   return (
     <>
-      <div className="navbar bg-violet-400 shadow-sm">
-        <div className="flex-1">
-          <Link to="/feed" className="btn btn-ghost bg-violet-500 text-lg rounded-3xl">
-            🧑‍💻 DevTinder
-          </Link>
-        </div>
-        {userData && (
+      {userData && (
+        <div className="navbar bg-[#fc6a78] shadow-sm">
+          <div className="flex-1">
+            <Link to="/" className="btn btn-ghost bg-[#FE4459] text-lg rounded-3xl">
+              🧑‍💻 DevTinder
+            </Link>
+          </div>
+
           <div className="flex gap-2 items-center">
-            <div className="text-sm font-semibold">
-              Welcome back, {userData.data.fname.toUpperCase() + " " + userData.data.lname.toUpperCase()}
+            <div className="text-sm font-bold text-white">
+              Welcome back, {userData?.data?.fname?.toUpperCase() + " " + userData?.data?.lname?.toUpperCase()}
             </div>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4 ml-2">
                 <div className="w-12 rounded-full">
-                  <img src={userData.data.profileUrl} />
+                  <img src={userData?.data?.profileUrl} />
                 </div>
               </div>
               <ul
@@ -49,16 +50,16 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link to={"/connections"}>My Connections</Link>
                 </li>
                 <li>
-                  <a onClick={()=>handleLogOut()}>Logout</a>
+                  <a onClick={() => handleLogOut()}>Logout</a>
                 </li>
               </ul>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
