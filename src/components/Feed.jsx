@@ -10,19 +10,36 @@ const Feed = () => {
   const feed = useSelector((state) => state.feed);
   const dispatch = useDispatch();
 
-  const feedData = async () => {
-    try {
-      const res = await axios.get(BASE_URL + "/user/feed", { withCredentials: true });
-      dispatch(addFeed(res.data.data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
-    feedData();
-  }, []);
+    const fetchFeedData = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/user/feed`, {
+          withCredentials: true,
+        });
+        dispatch(addFeed(res.data.data));
+      } catch (err) {
+        console.error("Error fetching feed data:", err);
+        // Optionally, show a toast or alert to the user
+      }
+    };
 
-  return <>{feed ? <div className="my-3">{<FeedCard user={feed} />}</div> : <Loading />}</>;
+    fetchFeedData();
+  }, [dispatch]);
+
+  // Handle empty feed array
+  if (feed.length === 0) {
+    return (
+      <div className="flex flex-col justify-center items-center h-[100vh] gap-16">
+        <p className="text-center font-semibold text-2xl">
+          Looks like you've swiped through everyone!
+          <br /> Come back later for more matches.
+        </p>
+        <span className="loading loading-ring w-12"></span>
+      </div>
+    );
+  }
+
+  return <div className="my-3">{feed.length > 0 ? <FeedCard user={feed[0]} /> : <Loading />}</div>;
 };
 
 export default Feed;
