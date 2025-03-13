@@ -45,7 +45,7 @@ const SignUp = () => {
         { withCredentials: true }
       );
 
-      navigateTo("/");
+      navigateTo("/profile");
     } catch (err) {
       setError(true);
 
