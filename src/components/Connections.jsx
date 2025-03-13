@@ -17,7 +17,8 @@ const Connections = () => {
   const fetchConnection = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true });
-      if (res.data.data && Array.isArray(res.data.data)) { // Check if data is an array
+      if (res.data.data && Array.isArray(res.data.data)) {
+        // Check if data is an array
         if (res.data.data.length === 0) {
           setError("No Connections Found");
         } else {
@@ -46,30 +47,25 @@ const Connections = () => {
   }
 
   // Error state
-  if (error) {
-    return (
-      <div className="container max-w-md mx-auto">
-        <div className="text-center text-2xl">{error}</div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return true;
+  // }
 
-  // Ensure friends is an array before mapping
-  if (!friends || !Array.isArray(friends)) {
-    return (
-      <div className="container max-w-md mx-auto">
-        <div className="text-center text-2xl">No Connections Found</div>
-      </div>
-    );
-  }
+  // if (!friends || !Array.isArray(friends)) {
+  //   return (
+  //     <div className="container max-w-md mx-auto">
+  //       <div className="text-center text-2xl">No Connections Found</div>
+  //     </div>
+  //   );
+  // }
 
-  if (friends.length === 0) {
-    return (
-      <div className="container max-w-md mx-auto">
-        <div className="text-center text-2xl">No Connections Found</div>
-      </div>
-    );
-  }
+  // if (friends.length === 0) {
+  //   return (
+  //     <div className="container max-w-md mx-auto">
+  //       <div className="text-center text-2xl">No Connections Found</div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex items-center justify-center h-full p-4 gap-2">
@@ -94,6 +90,8 @@ const Connections = () => {
           </div>
         </div>
         <ul className="list bg-base-200 rounded-b-box shadow-md h-[70vh] overflow-y-auto">
+          {error && <div className="text-center text-2xl m-auto">{error}</div>}
+          {!friends || (!Array.isArray(friends) && <div className="text-center text-2xl">No Connections Found</div>)}
           {friends.map(({ _id, fname, lname, profileUrl, gender, age }) => (
             <div key={_id}>
               <li className="list-row">
