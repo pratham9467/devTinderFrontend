@@ -20,7 +20,6 @@ const Feed = () => {
         dispatch(addFeed(res.data.data));
       } catch (err) {
         console.error("Error fetching feed data:", err);
-        // Optionally, show a toast or alert to the user
       }
     };
 
