@@ -14,7 +14,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/user/feed`, {
+        const res = await axios.get(BASE_URL + "/user/feed", {
           withCredentials: true,
         });
         dispatch(addFeed(res.data.data));
@@ -32,7 +32,7 @@ const Feed = () => {
       <div
         className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
         style={{ backgroundImage: `url(${backgroundImage})` }}>
-          <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="flex flex-col justify-center items-center h-[100vh] gap-16 absolute">
           <p className="text-center font-semibold text-2xl">
             Looks like you've swiped through everyone!
