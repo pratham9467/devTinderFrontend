@@ -14,9 +14,10 @@ const Feed = () => {
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
-        const res = await axios.get(BASE_URL + "/user/feed", {
+        axios.get(`${BASE_URL}/user/feed`, {
           withCredentials: true,
         });
+        console.log("Feed data fetched:", res.data.data);
         dispatch(addFeed(res.data.data));
       } catch (err) {
         console.error("Error fetching feed data:", err);
