@@ -44,7 +44,7 @@ const Feed = () => {
     );
   }
 
-  return <div>{feed.length > 0 ? <FeedCard user={feed[0]} /> : <Loading />}</div>;
+  return <div className="p-8">{feed.length > 0 ? <FeedCard user={feed[0]} /> : <Loading />}</div>;
 };
 
 export default Feed;
