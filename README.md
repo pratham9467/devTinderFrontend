@@ -17,12 +17,6 @@ A Tinder-style platform for developers to discover, connect, and collaborate bas
 - **Frontend:** React.js, Tailwind CSS, Redux Toolkit, Axios
 - **Auth:** JWT + Cookies (`withCredentials` support)
 
-## 📸 Screenshots
-
-> Add here: screenshots or demo GIFs of profile, swipe, etc.
-
----
-
 ## 🚀 Getting Started
 
 ### 1. Clone the repo
