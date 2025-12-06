@@ -193,7 +193,7 @@ const ProfileEdit = ({ editEnabled, user }) => {
       </div>
       <div>
         {editEnabled && (
-          <button className="btn w-full bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0" onClick={() => handleSaveAndShowToast()}>
+          <button className="btn w-full bg-linear-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0" onClick={() => handleSaveAndShowToast()}>
             Save
           </button>
         )}

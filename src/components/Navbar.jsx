@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <>
       {userData && (
-        <div className="navbar bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] shadow-lg">
+        <div className="navbar bg-linear-to-r from-[#fe3c72] to-[#ef4a75] shadow-lg">
           <div className="flex-1">
             <Link to="/" className="btn btn-ghost bg-white/10 hover:bg-white/20 text-lg rounded-2xl text-white border-0">
               🧑‍💻 DevTinder

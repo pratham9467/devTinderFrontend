@@ -77,7 +77,7 @@ const Connections = () => {
             <div className="drawer w-full z-50">
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content w-fit">
-                <label htmlFor="my-drawer" className="btn bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0 drawer-button">
+                <label htmlFor="my-drawer" className="btn bg-linear-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0 drawer-button">
                   Requests
                 </label>
               </div>
