@@ -30,10 +30,10 @@ const Feed = () => {
   if (feed.length === 0) {
     return (
       <div
-        className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
+        className="w-auto h-screen bg-center bg-cover items-center justify-center flex relative"
         style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className="absolute inset-0 bg-black/50"></div>
-        <div className="flex flex-col justify-center items-center h-[100vh] gap-16 absolute">
+        <div className="flex flex-col justify-center items-center h-screen gap-16 absolute">
           <p className="text-center font-semibold text-2xl">
             Looks like you've swiped through everyone!
             <br /> Come back later for more matches.

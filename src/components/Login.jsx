@@ -32,7 +32,7 @@ const Login = () => {
   };
   return (
     <div
-      className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
+      className="w-auto h-screen bg-center bg-cover items-center justify-center flex relative"
       style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="card card-border bg-[#424242]/20 backdrop-blur-xl shadow-2xl shadow-[#fe3c72]/30 w-96 border border-[#fe3c72]/30">
@@ -64,7 +64,7 @@ const Login = () => {
             </div>
           )}
           <div className="card-actions justify-center my-4">
-            <button className="btn glass glass-hover bg-gradient-to-r from-[#fe3c72]/80 to-[#ef4a75]/80 text-white border-0" onClick={() => handleSubmit()}>
+            <button className="btn glass glass-hover bg-linear-to-r from-[#fe3c72]/80 to-[#ef4a75]/80 text-white border-0" onClick={() => handleSubmit()}>
               Login
             </button>
           </div>

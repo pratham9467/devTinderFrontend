@@ -39,7 +39,7 @@ const FeedCard = ({ user }) => {
 
   return (
     <div
-      className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
+      className="w-auto h-screen bg-center bg-cover items-center justify-center flex relative"
       style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="flex justify-center items-center py-4 absolute w-full h-full sm:w-auto sm:h-auto">

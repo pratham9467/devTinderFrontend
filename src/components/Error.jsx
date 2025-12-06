@@ -11,7 +11,7 @@ const Error = () => {
         <h2 className="text-2xl font-bold text-red-400 mb-3">Oops! Something went wrong</h2>
         <p className="text-gray-300 mb-6">We couldn't find what you're looking for. Let's get you back on track!</p>
         <button 
-          className="btn bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0"
+          className="btn bg-linear-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0"
           onClick={() => navigateTo("/")}
         >
           Go Home
