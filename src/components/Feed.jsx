@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import FeedCard from "./FeedCard";
 import Loading from "./Loading";
-import backgroundImage from "../assets/bgimage.jpg";
+import backgroundImage from "../assets/bgimage.avif";
 
 const Feed = () => {
   const feed = useSelector((state) => state.feed);

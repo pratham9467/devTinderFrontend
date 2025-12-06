@@ -23,16 +23,16 @@ const Navbar = () => {
   return (
     <>
       {userData && (
-        <div className="navbar bg-[#fc6a78] shadow-sm">
+        <div className="navbar bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] shadow-lg">
           <div className="flex-1">
-            <Link to="/" className="btn btn-ghost bg-[#FE4459] text-lg rounded-3xl">
+            <Link to="/" className="btn btn-ghost bg-white/10 hover:bg-white/20 text-lg rounded-2xl text-white border-0">
               🧑‍💻 DevTinder
             </Link>
           </div>
 
           <div className="flex gap-2 items-center">
-            <div className="text-sm font-bold text-white">
-              Welcome back, {userData?.data?.fname?.toUpperCase() + " " + userData?.data?.lname?.toUpperCase()}
+            <div className="text-sm font-semibold text-white/90">
+              Welcome, {userData?.data?.fname?.charAt(0).toUpperCase() + userData?.data?.fname?.slice(1)}
             </div>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4 ml-2">

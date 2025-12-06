@@ -4,7 +4,7 @@ import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from "../utils/Constants";
 import { useNavigate } from "react-router";
-import backgroundImage from "../assets/bgimage.jpg";
+import backgroundImage from "../assets/bgimage.avif";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +26,8 @@ const Login = () => {
       dispatch(addUser(res.data));
       return navigateTo("/");
     } catch (err) {
-      setError(err?.response?.data || "Something went wrong");
+      const errorMsg = err?.response?.data || "Oops! Something went wrong. Please try again.";      
+      setError(typeof errorMsg === 'string' ? errorMsg : errorMsg.message || "Invalid email or password. Let's try that again!");
     }
   };
   return (
@@ -34,9 +35,9 @@ const Login = () => {
       className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
       style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="absolute inset-0 bg-black/50"></div>
-      <div className="card card-border bg-black/80 shadow-lg shadow-black w-96">
+      <div className="card card-border bg-[#424242]/20 backdrop-blur-xl shadow-2xl shadow-[#fe3c72]/30 w-96 border border-[#fe3c72]/30">
         <div className="card-body">
-          <h2 className="card-title">Login</h2>
+          <h2 className="card-title text-3xl font-bold text-[#fe3c72]">Login</h2>
           <fieldset className="fieldset">
             <legend className="fieldset-legend">Email</legend>
             <input
@@ -57,9 +58,13 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </fieldset>
-          <p className="text-red-500">{error}</p>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3">
+              <p className="text-red-400 text-sm">❌ {error}</p>
+            </div>
+          )}
           <div className="card-actions justify-center my-4">
-            <button className="btn bg-[#fc6a78]" onClick={() => handleSubmit()}>
+            <button className="btn glass glass-hover bg-gradient-to-r from-[#fe3c72]/80 to-[#ef4a75]/80 text-white border-0" onClick={() => handleSubmit()}>
               Login
             </button>
           </div>
