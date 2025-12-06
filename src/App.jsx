@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Body from "./screens/Body";
 import Login from "./components/Login";
@@ -14,11 +13,11 @@ const App = () => {
   return (
     <>
       <Provider store={store}>
-        <BrowserRouter basename="/">
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<Body />}>
-              <Route path="/" element={<Feed />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Feed />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/connections" element={<Connections />} />
