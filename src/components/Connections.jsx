@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import pass from "../assets/pass.svg";
 import message from "../assets/message.svg";
 import axios from "axios";
@@ -10,33 +10,34 @@ import Loading from "./Loading";
 
 const Connections = () => {
   const friends = useSelector((state) => state.connections);
-  const dipatch = useDispatch();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchConnection = async () => {
+  const fetchConnection = useCallback(async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true });
       if (res.data.data && Array.isArray(res.data.data)) {
         // Check if data is an array
         if (res.data.data.length === 0) {
-          setError("No Connections Found");
+          setError("💔 No connections yet. Start swiping to make some!");
         } else {
           dipatch(addConnections(res.data.data));
         }
       } else {
-        setError("Invalid data format");
+        setError("😞 Something unexpected happened. Please refresh!");
       }
     } catch (err) {
-      console.log(err?.response?.data || "Something went wrong");
+      console.log(err?.response?.data || "Couldn't load connections");
+      setError("😞 Couldn't load your connections. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchConnection();
-  }, []);
+  }, [fetchConnection]);
 
   if (loading) {
     return (
@@ -68,15 +69,15 @@ const Connections = () => {
   // }
 
   return (
-    <div className="flex items-center justify-center h-full p-4 gap-2">
-      <div className="container scroll-auto overflow-y-auto p-4">
+    <div className="block sm:flex sm:items-center sm:justify-center h-full">
+      <div className="w-full sm:container scroll-auto overflow-y-auto">
         <div className="p-4 pb-2 bg-base-200 rounded-t-box shadow-md flex justify-between items-center">
           <div className="text-xl font-semibold opacity-60 tracking-wide"> Your Connections</div>
           <div>
             <div className="drawer w-full z-50">
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content w-fit">
-                <label htmlFor="my-drawer" className="btn bg-[#fc6a78] drawer-button">
+                <label htmlFor="my-drawer" className="btn bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0 drawer-button">
                   Requests
                 </label>
               </div>
@@ -90,8 +91,20 @@ const Connections = () => {
           </div>
         </div>
         <ul className="list bg-base-200 rounded-b-box shadow-md h-[70vh] overflow-y-auto">
-          {error && <div className="text-center text-2xl m-auto">{error}</div>}
-          {!friends || (!Array.isArray(friends) && <div className="text-center text-2xl">No Connections Found</div>)}
+          {error && (
+            <div className="m-4">
+              <div className="bg-yellow-500/10 border border-yellow-500/50 rounded-lg p-6 text-center">
+                <p className="text-yellow-400 text-lg">{error}</p>
+              </div>
+            </div>
+          )}
+          {!friends || (!Array.isArray(friends) && (
+            <div className="m-4">
+              <div className="bg-blue-500/10 border border-blue-500/50 rounded-lg p-6 text-center">
+                <p className="text-white text-lg">👋 No connections found. Start connecting!</p>
+              </div>
+            </div>
+          ))}
           {friends.map(({ _id, fname, lname, profileUrl, gender, age }) => (
             <div key={_id}>
               <li className="list-row">

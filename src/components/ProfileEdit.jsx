@@ -73,6 +73,7 @@ const ProfileEdit = ({ editEnabled, user }) => {
       navigateTo(0); // Reload the page
     } catch (err) {
       console.error("Failed to update user:", err.response?.data || err.message);
+      alert("😞 Couldn't save your profile. Please check your details and try again!");
     }
   };
 
@@ -87,7 +88,7 @@ const ProfileEdit = ({ editEnabled, user }) => {
   };
   return (
     <div className="p-6">
-      {toast && <Toast message="Profile updated successfully!" />}
+      {toast && <Toast message="✨ Profile updated successfully!" />}
       <div className="text-2xl font-bold text-white">Profile</div>
       <div className="flex gap-4">
         <fieldset className="fieldset w-full">
@@ -192,7 +193,7 @@ const ProfileEdit = ({ editEnabled, user }) => {
       </div>
       <div>
         {editEnabled && (
-          <button className="btn w-full bg-[#fc6a78]" onClick={() => handleSaveAndShowToast()}>
+          <button className="btn w-full bg-gradient-to-r from-[#fe3c72] to-[#ef4a75] hover:from-[#fd5564] hover:to-[#fe3c72] text-white border-0" onClick={() => handleSaveAndShowToast()}>
             Save
           </button>
         )}

@@ -2,3 +2,59 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark;
 }
+
+:root {
+  --primary: #fe3c72;
+  --secondary: #fd5564;
+  --accent: #ef4a75;
+  --dark: #424242;
+  --white: #ffffff;
+  --gradient-primary: linear-gradient(135deg, #fe3c72 0%, #ef4a75 100%);
+  --gradient-bg: linear-gradient(135deg, #424242 0%, #2a2a2a 100%);
+}
+
+body {
+  background: linear-gradient(135deg, #424242 0%, #2a2a2a 100%);
+  min-height: 100vh;
+}
+
+.input {
+  border-radius: 10px;
+  height: 40px;
+  width: 100%;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(254, 60, 114, 0.2);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(254, 60, 114, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(254, 60, 114, 0.6); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

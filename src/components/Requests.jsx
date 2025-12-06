@@ -15,7 +15,7 @@ const Requests = () => {
   const [error, setError] = useState(null); // Add error state
   const [requestTrigger, setRequestTrigger] = useState(0);
 
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
@@ -23,16 +23,16 @@ const Requests = () => {
 
       // If no requests are found, set an error message
       if (res.data.data.length === 0) {
-        setError("No requests found");
+        setError("😔 No connection requests yet. Keep swiping!");
       } else {
         dispatch(addRequest(res.data.data)); // Dispatch requests to Redux store
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong"); // Set error message
+      setError(err.response?.data?.message || "😞 Oops! Couldn't load requests. Please try again."); // Set error message
     } finally {
       setLoading(false); // Set loading to false after API call completes
     }
-  };
+  }, []);
 
   const handleRequest = useCallback(async (status, _id, fromUserId) => {
     try {
@@ -43,13 +43,13 @@ const Requests = () => {
       }
       setRequestTrigger((prev) => prev + 1);
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(err.response?.data?.message || "😞 Couldn't process that. Please try again.");
     }
   }, []);
 
   useEffect(() => {
     fetchRequests();
-  }, [requestTrigger]);
+  }, [fetchRequests, requestTrigger]);
 
   // Loading state
   if (loading) {
@@ -63,8 +63,10 @@ const Requests = () => {
   // Error state
   if (error) {
     return (
-      <div className="container max-w-md mx-auto">
-        <div className="text-center text-2xl">{error}</div>
+      <div className="container max-w-md mx-auto p-4">
+        <div className="bg-yellow-500/10 border border-yellow-500/50 rounded-lg p-6 text-center">
+          <p className="text-yellow-400 text-lg">{error}</p>
+        </div>
       </div>
     );
   }
@@ -72,8 +74,10 @@ const Requests = () => {
   // No requests found
   if (requests.length === 0) {
     return (
-      <div className="container max-w-md mx-auto">
-        <div className="text-center text-2xl">No Requests Found</div>
+      <div className="container max-w-md mx-auto p-4">
+        <div className="bg-blue-500/10 border border-blue-500/50 rounded-lg p-6 text-center">
+          <p className="text-blue-400 text-lg">👋 No new requests right now. Check back soon!</p>
+        </div>
       </div>
     );
   }

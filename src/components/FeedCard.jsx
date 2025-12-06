@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import like from "../assets/like.svg";
 import pass from "../assets/pass.svg";
 import { BASE_URL } from "../utils/Constants";
@@ -6,12 +6,15 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed, removeFeed } from "../utils/feedSlice";
 import Loading from "./Loading";
-import backgroundImage from "../assets/bgimage.jpg";
+import backgroundImage from "../assets/bgimage.avif";
 
 
 const FeedCard = ({ user }) => {
   const feed = useSelector((state) => state.feed);
   const dispatch = useDispatch();
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
 
   // Early return if user is not provided
   if (!user) {
@@ -39,31 +42,106 @@ const FeedCard = ({ user }) => {
       className="w-auto h-[100vh] bg-center bg-cover items-center justify-center flex relative"
       style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="absolute inset-0 bg-black/50"></div>
-      <div className="flex justify-center items-center py-4 absolute">
-        <div className="card bg-base-300 w-72 shadow-2xl shadow-gray-950">
+      <div className="flex justify-center items-center py-4 absolute w-full h-full sm:w-auto sm:h-auto">
+        <div 
+          className="card glass glass-hover w-full max-w-sm sm:w-80 md:w-80 rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing transition-transform duration-200 relative"
+          style={{
+            transform: `translate(${dragOffset.x}px, ${dragOffset.y}px) rotate(${dragOffset.x * 0.1}deg)`,
+            opacity: Math.max(0.5, 1 - Math.abs(dragOffset.x) / 300)
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+            setDragStart({ x: e.clientX, y: e.clientY });
+          }}
+          onMouseMove={(e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.clientX - dragStart.x;
+            const y = e.clientY - dragStart.y;
+            setDragOffset({ x, y });
+          }}
+          onMouseUp={(e) => {
+            e.preventDefault();
+            setTimeout(() => {
+              if (Math.abs(dragOffset.x) > 100) {
+                handleClick(dragOffset.x > 0 ? 'like' : 'pass', _id);
+              }
+              setIsDragging(false);
+              setDragOffset({ x: 0, y: 0 });
+            }, 100);
+          }}
+          onMouseLeave={() => {
+            if (isDragging) {
+              setTimeout(() => {
+                if (Math.abs(dragOffset.x) > 100) {
+                  handleClick(dragOffset.x > 0 ? 'like' : 'pass', _id);
+                }
+                setIsDragging(false);
+                setDragOffset({ x: 0, y: 0 });
+              }, 100);
+            }
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+            setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+          }}
+          onTouchMove={(e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.touches[0].clientX - dragStart.x;
+            const y = e.touches[0].clientY - dragStart.y;
+            setDragOffset({ x, y });
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            if (Math.abs(dragOffset.x) > 100) {
+              handleClick(dragOffset.x > 0 ? 'like' : 'pass', _id);
+            }
+            setIsDragging(false);
+            setDragOffset({ x: 0, y: 0 });
+          }}
+        >
           <figure>
-            <div className="w-80 h-72 overflow-hidden object-fill">
-              <img className="h-full w-full object-fill" src={profileUrl} alt={`${fname}'s profile`} />
+            <div className="w-full h-80 sm:h-75 overflow-hidden">
+              <img className="h-full w-full" src={profileUrl} alt={`${fname}'s profile`} />
             </div>
           </figure>
-          <div className="card-body py-2">
-            <h3 className="card-title">{fullName}</h3>
-            <h4 className="card-title font-semibold text-sm">Gender: {gender}</h4>
-            <legend className="fieldset-legend m-0 p-0">Bio</legend>
-            <p className="font-semibold bg-base-100 rounded-2xl p-2 w-full h-20 overflow-y-auto scroll-auto">{about}</p>
-            <p className="font-semibold">Skills: {skills.join(", ")}</p>
-            <div className="card-actions justify-between my-1 px-6">
+          <div className="card-body p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl font-bold text-white">{fullName}</h3>
+              <span className="px-2 py-1 bg-blue-400 text-[#ffffff] text-md font-semibold rounded-full">{gender}</span>
+            </div>
+            
+            <p className="text-white text-sm leading-relaxed line-clamp-3">{about}</p>
+            
+            <div className="flex flex-wrap gap-1">
+              {skills.slice(0, 3).map((skill, i) => (
+                <span key={i} className="px-2 py-1 bg-white/20 text-white text-xs rounded-lg">{skill}</span>
+              ))}
+              {skills.length > 3 && <span className="px-2 py-1 bg-white/10 text-white/80 text-xs rounded-lg">+{skills.length - 3}</span>}
+            </div>
+            
+            <div className="flex justify-center gap-6 pt-2">
               <button
-                className="border bg-base-100 rounded-full overflow-hidden p-0.5 hover:scale-110 transition-transform"
+                className="w-14 h-14 glass glass-hover rounded-full flex items-center justify-center border border-red-400/50 hover:border-red-400 group"
                 onClick={() => handleClick("pass", _id)}>
-                <img className="active:scale-110 transition-transform" src={pass} height={40} width={40} alt="Pass" />
+                <img className="w-7 h-7 group-active:scale-110 transition-transform" src={pass} alt="Pass" />
               </button>
               <button
-                className="flex items-center justify-center border bg-base-100 rounded-full overflow-hidden p-2 hover:scale-110 transition-transform"
+                className="w-14 h-14 glass glass-hover rounded-full flex items-center justify-center border border-[#fe3c72]/50 hover:border-[#fe3c72] group"
                 onClick={() => handleClick("like", _id)}>
-                <img className="active:scale-125 transition-transform" src={like} height={30} width={30} alt="Like" />
+                <img className="w-7 h-7 group-active:scale-125 transition-transform" src={like} alt="Like" />
               </button>
             </div>
+            
+            {isDragging && (
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 glass rounded-full px-4 py-2">
+                {dragOffset.x > 20 && <span className="text-green-400 text-lg font-bold">❤️ LIKE</span>}
+                {dragOffset.x < -20 && <span className="text-red-400 text-lg font-bold">❌ PASS</span>}
+              </div>
+            )}
           </div>
         </div>
       </div>
