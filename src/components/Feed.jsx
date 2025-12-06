@@ -20,7 +20,6 @@ const Feed = () => {
         dispatch(addFeed(res.data.data));
       } catch (err) {
         console.error("Error fetching feed data:", err);
-        // Optionally, show a toast or alert to the user
       }
     };
 
@@ -33,7 +32,7 @@ const Feed = () => {
       <div
         className="w-auto h-screen bg-center bg-cover items-center justify-center flex relative"
         style={{ backgroundImage: `url(${backgroundImage})` }}>
-          <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="flex flex-col justify-center items-center h-screen gap-16 absolute">
           <p className="text-center font-semibold text-2xl">
             Looks like you've swiped through everyone!
