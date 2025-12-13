@@ -13,18 +13,15 @@ const Body = () => {
   const userData = useSelector((state) => state.user);
 
   const fetchData = async () => {
-    if (userData) {
-      return navigateTo("/");
-    }
+    if (userData) return;
     try {
-      if (!userData) {
-        const Userprofile = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
-        dispatch(addUser(Userprofile.data));
-      }
+      const Userprofile = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
+      dispatch(addUser(Userprofile.data));
     } catch (err) {
-      if (err.response.status === 401) {
+      if (err?.response?.status === 401) {
         navigateTo("/login");
       }
+      console.error("Error fetching user:", err);
     }
   };
 

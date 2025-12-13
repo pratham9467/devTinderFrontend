@@ -22,7 +22,7 @@ const Connections = () => {
         if (res.data.data.length === 0) {
           setError("💔 No connections yet. Start swiping to make some!");
         } else {
-          dipatch(addConnections(res.data.data));
+          dispatch(addConnections(res.data.data));
         }
       } else {
         setError("😞 Something unexpected happened. Please refresh!");
@@ -33,7 +33,7 @@ const Connections = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     fetchConnection();
@@ -98,14 +98,7 @@ const Connections = () => {
               </div>
             </div>
           )}
-          {!friends || (!Array.isArray(friends) && (
-            <div className="m-4">
-              <div className="bg-blue-500/10 border border-blue-500/50 rounded-lg p-6 text-center">
-                <p className="text-white text-lg">👋 No connections found. Start connecting!</p>
-              </div>
-            </div>
-          ))}
-          {friends.map(({ _id, fname, lname, profileUrl, gender, age }) => (
+          {friends && Array.isArray(friends) && friends.map(({ _id, fname, lname, profileUrl, gender, age }) => (
             <div key={_id}>
               <li className="list-row">
                 <div>

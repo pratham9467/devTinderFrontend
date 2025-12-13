@@ -53,8 +53,8 @@ const SignUp = () => {
         setError(false);
       }, 3000);
 
-      const errorMsg = err?.response?.data;
-      setErrorMessage(typeof errorMsg === 'string' ? errorMsg : errorMsg?.message || "Hmm, we couldn't create your account. Please check your details and try again!");
+      const errorMsg = err?.response?.data?.error || err?.response?.data;
+      setErrorMessage(typeof errorMsg === 'string' ? errorMsg : "Hmm, we couldn't create your account. Please check your details and try again!");
     }
   };
 
