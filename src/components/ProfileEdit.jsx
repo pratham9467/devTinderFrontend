@@ -64,9 +64,9 @@ const ProfileEdit = ({ editEnabled, user }) => {
     };
     try {
       const res = await axios.patch(BASE_URL + "/profile/edit", updatedUser, {
-        withCredentials: true, // Include credentials
+        withCredentials: true,
       });
-      dispatch(addUser(res.data.user)); // Update Redux store with the new user data
+      dispatch(addUser({ data: res.data.user }));
 
       // Reload the page or navigate after toast disappears
 

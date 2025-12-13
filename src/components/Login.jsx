@@ -26,8 +26,8 @@ const Login = () => {
       dispatch(addUser(res.data));
       return navigateTo("/");
     } catch (err) {
-      const errorMsg = err?.response?.data || "Oops! Something went wrong. Please try again.";      
-      setError(typeof errorMsg === 'string' ? errorMsg : errorMsg.message || "Invalid email or password. Let's try that again!");
+      const errorMsg = err?.response?.data?.error || err?.response?.data || "Oops! Something went wrong. Please try again.";      
+      setError(typeof errorMsg === 'string' ? errorMsg : "Invalid email or password. Let's try that again!");
     }
   };
   return (
